@@ -44,21 +44,21 @@ CREATE TABLE Orderrader (
 	FOREIGN KEY (BokID) REFERENCES Bocker(BokID) 					-- FK till böcker
 );
 
--- Infoga testdata i tabellen Kunder
+-- Infogar testdata i tabellen Kunder
 INSERT INTO Kunder (Namn, Epost, Telefon, Adress) VALUES
 ('Anna Andersson', 'anna@mail.com', '070-1111111', 'Storgatan 1, 111 11 Stockholm'),
 ('Bengt Bengtsson', 'bengt@mail.com', '070-2222222', 'Lillgatan 2, 222 22 Göteborg'),
 ('Carl Carlsson', 'carl@mail.com', '070-3333333', 'Norra vägen 3, 333 33 Malmö'),
 ('Didrik Didriksson', 'didrik@mail.com', '070-4444444', 'Södra vägen 4, 444 44 Kalmar');
 
--- Infoga testdata i tabellen Böcker
+-- Infogar testdata i tabellen Böcker
 INSERT INTO Bocker (Titel, ISBN, Forfattare, Pris, Lagerstatus) VALUES
 ('Star Wars: Heir to the Empire', '9780553296129', 'Timothy Zahn', 129.00, 10),
 ('The Game', '9780470835847', 'Ken Dryden', 159.00, 5),
 ('Clean Code: A Handbook of Agile Software Craftsmanship', '9780132350884', 'Robert C. Martin', 499.00, 8),
 ('The Hobbit', '9780261102217', 'J.R.R. Tolkien', 199.00, 25);
 
--- Infoga testdata i tabellen Beställningar
+-- Infogar testdata i tabellen Beställningar
 -- Här kopplas Kunder till sin order.
 INSERT INTO Bestallningar (KundID, Datum, Totalbelopp) VALUES
 (1, '2024-03-01', 328.00),  -- Anna: Star Wars (129) + Hobbit (199)
@@ -68,7 +68,7 @@ INSERT INTO Bestallningar (KundID, Datum, Totalbelopp) VALUES
 (1, '2024-03-20', 499.00),  -- Anna: Clean Code
 (4, '2024-03-22', 199.00);  -- Didrik: Hobbit
 
--- Infoga testdata i tabellen Orderrader
+-- Infogar testdata i tabellen Orderrader
 INSERT INTO Orderrader (OrderID, BokID, Antal, Styckpris) VALUES
 (1, 1, 1, 129.00),  -- Order 1: 1 x Star Wars
 (1, 4, 1, 199.00),  -- Order 1: 1 x Hobbit
