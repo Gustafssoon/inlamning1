@@ -1,4 +1,4 @@
-# Bokstugan – Databas för liten bokhandel  
+# :books: Bokstugan – Databas för liten bokhandel  
 *Inlämning 1 – Databaser (YH25)*  
 Gabriel Gustafsson
 
@@ -15,12 +15,18 @@ Databasen består av fyra tabeller med relationer mellan kunder, böcker, bestä
 - **Orderrader** – vilka böcker som ingår i varje beställning
 
 ## Funktioner som används
-- Primärnycklar och AUTO_INCREMENT
-- Främmande nycklar (FK) för att skapa relationer
-- CHECK-regler på pris och lagerstatus
-- INSERT för testdata
-- INNER JOIN för att hämta data från flera tabeller
+- Primärnycklar (PK) och AUTO_INCREMENT
+- Främmande nycklar (FK) - för att skapa relationer
+- UNIQUE och NOT NULL - regel att vara unikt och inte tomt
+- CHECK - regler på pris och lagerstatus
+- DEFAULT CURRENT_TIMESTAMP - för att automatiskt sätta datum
+- INSERT - för att lägga in testdata
+- SELECT - för att hämta data
+- INNER JOIN - för att kombinera data från flera tabeller
+- DESCRIBE - för att visa tabellstrukturer
+- SHOW TABLES - för att lista alla tabeller
 
 
 SQL-koden finns i [**Bokstugan.sql**](Bokstugan.sql).
+
 
