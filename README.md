@@ -22,4 +22,5 @@ Databasen består av fyra tabeller med relationer mellan kunder, böcker, bestä
 - INNER JOIN för att hämta data från flera tabeller
 
 
-SQL-koden finns i filen **Bokstugan.sql**.
+SQL-koden finns i [**Bokstugan.sql**](Bokstugan.sql).
+
