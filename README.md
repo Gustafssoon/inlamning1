@@ -27,6 +27,7 @@ Databasen består av fyra tabeller med relationer mellan kunder, böcker, bestä
 - SHOW TABLES - för att lista alla tabeller
 
 
-SQL-koden finns i [**Bokstugan.sql**](Bokstugan.sql).
+SQL-koden finns i [**inlamning1.sql**](inlamning1.sql).
+
 
 
