@@ -2,8 +2,8 @@
 -- Inlämning 1 - Liten bokhandel (Bokstugan)
 
 -- Skapa databasen och använd den
-CREATE DATABASE Bokstugan2;
-USE Bokstugan2;
+CREATE DATABASE Bokstugan;
+USE Bokstugan;
 
 -- Skapar tabell: Kunder
 CREATE TABLE Kunder (
@@ -46,10 +46,11 @@ CREATE TABLE Orderrader (
 
 -- Infogar testdata i tabellen Kunder
 INSERT INTO Kunder (Namn, Epost, Telefon, Adress) VALUES
-('Anna Andersson', 'anna@mail.com', '070-1111111', 'Storgatan 1, 111 11 Stockholm'),
-('Bengt Bengtsson', 'bengt@mail.com', '070-2222222', 'Lillgatan 2, 222 22 Göteborg'),
+('Anna Andersson', 'anna@mail.com', '070-1111111', 'Stora vägen 1, 111 11 Stockholm'),
+('Bengt Bengtsson', 'bengt@mail.com', '070-2222222', 'Lilla vägen 2, 222 22 Göteborg'),
 ('Carl Carlsson', 'carl@mail.com', '070-3333333', 'Norra vägen 3, 333 33 Malmö'),
-('Didrik Didriksson', 'didrik@mail.com', '070-4444444', 'Södra vägen 4, 444 44 Kalmar');
+('Didrik Didriksson', 'didrik@mail.com', '070-4444444', 'Södra vägen 4, 444 44 Kalmar'),
+('Erik Eriksson', 'erik@mail.com', '070-5555555', 'Östra vägen 5, 555 55 Nybro');
 
 -- Infogar testdata i tabellen Böcker
 INSERT INTO Bocker (Titel, ISBN, Forfattare, Pris, Lagerstatus) VALUES
@@ -83,35 +84,29 @@ INSERT INTO Orderrader (OrderID, BokID, Antal, Styckpris) VALUES
 -- Testa så att allt fungerar --
 -- ========================== --
 
--- Visa Kunder
-SELECT * FROM Kunder;
-
--- Visa Böcker
-SELECT * FROM Bocker;
 
 -- Visar alla beställningar tillsammans med kundens namn
--- Använder INNER JOIN för att koppla ihop tabellen Beställningar med Kunder via KundID
--- På så sätt kan man se vilken kund som gjort vilken beställning.
-SELECT
-  Bestallningar.OrderID, 
-  Kunder.Namn, 
-  Bestallningar.Datum, 
-  Bestallningar.Totalbelopp
-FROM Bestallningar
-  INNER JOIN Kunder 
-  ON Bestallningar.KundID = Kunder.KundID;
+SELECT Bestallningar.OrderID, Kunder.Namn, Bestallningar.Datum, Bestallningar.Totalbelopp FROM Bestallningar
+INNER JOIN Kunder ON Bestallningar.KundID = Kunder.KundID;
 
--- Hämtar alla orderrader och visar vilken kund som har köpt vilken bok.
--- Använder INNER JOIN mellan tre tabeller:
--- Orderrader till Beställningar & Böcker via OrderID och BokID. Beställningar till Kunder via KundID
--- Detta gör att man kan visa titel, kundnamn, antal och styckpris för varje bok i varje beställning.
-SELECT
-  Orderrader.OrderID, 
-  Kunder.Namn, 
-  Bocker.Titel, 
-  Orderrader.Antal, 
-  Orderrader.Styckpris
-FROM Orderrader
-  INNER JOIN Bestallningar ON Orderrader.OrderID = Bestallningar.OrderID
-  INNER JOIN Kunder ON Bestallningar.KundID = Kunder.KundID
-  INNER JOIN Bocker ON Orderrader.BokID = Bocker.BokID;
+-- Visar alla orderrader med kundens namn och boktitel
+SELECT Orderrader.OrderID, Kunder.Namn, Bocker.Titel, Orderrader.Antal, Orderrader.Styckpris FROM Orderrader
+INNER JOIN Bestallningar ON Orderrader.OrderID = Bestallningar.OrderID
+INNER JOIN Kunder ON Bestallningar.KundID = Kunder.KundID
+INNER JOIN Bocker ON Orderrader.BokID = Bocker.BokID;
+
+-- Visar även kunder utan beställningar (Erik Eriksson står som NULL)
+SELECT Kunder.Namn, Bestallningar.OrderID FROM Kunder
+LEFT JOIN Bestallningar
+ON Kunder.KundID = Bestallningar.KundID;
+
+-- Räknar antal beställningar per kund
+SELECT Kunder.Namn, COUNT(Bestallningar.OrderID) AS AntalBeställningar FROM Bestallningar
+INNER JOIN Kunder ON Bestallningar.KundID = Kunder.KundID
+GROUP BY Kunder.Namn;
+
+-- Visar kunder som gjort mer än 2 beställningar
+SELECT Kunder.Namn, COUNT(Bestallningar.OrderID) AS AntalBeställningar FROM Bestallningar
+INNER JOIN Kunder ON Bestallningar.KundID = Kunder.KundID
+GROUP BY Kunder.Namn
+HAVING COUNT(Bestallningar.OrderID) > 2;
