@@ -39,7 +39,7 @@ CREATE TABLE Orderrader (
     OrderID INT NOT NULL,
     BokID INT NOT NULL,
     Antal INT NOT NULL, 											-- Antal exemplar av boken
-    Styckpris DECIMAL(10,2) NOT NULL,
+    Pris DECIMAL(10,2) NOT NULL,
 	FOREIGN KEY (OrderID) REFERENCES Bestallningar(OrderID), 		-- FK till beställningar
 	FOREIGN KEY (BokID) REFERENCES Bocker(BokID) 					-- FK till böcker
 );
@@ -70,7 +70,7 @@ INSERT INTO Bestallningar (KundID, Datum, Totalbelopp) VALUES
 (4, '2024-03-22', 199.00);  -- Didrik: Hobbit
 
 -- Infogar testdata i tabellen Orderrader
-INSERT INTO Orderrader (OrderID, BokID, Antal, Styckpris) VALUES
+INSERT INTO Orderrader (OrderID, BokID, Antal, Pris) VALUES
 (1, 1, 1, 129.00),  -- Order 1: 1 x Star Wars
 (1, 4, 1, 199.00),  -- Order 1: 1 x Hobbit
 (2, 4, 2, 199.00),  -- Order 2: 2 x Hobbit
@@ -90,7 +90,7 @@ SELECT Bestallningar.OrderID, Kunder.Namn, Bestallningar.Datum, Bestallningar.To
 INNER JOIN Kunder ON Bestallningar.KundID = Kunder.KundID;
 
 -- Visar alla orderrader med kundens namn och boktitel
-SELECT Orderrader.OrderID, Kunder.Namn, Bocker.Titel, Orderrader.Antal, Orderrader.Styckpris FROM Orderrader
+SELECT Orderrader.OrderID, Kunder.Namn, Bocker.Titel, Orderrader.Antal, Orderrader.Pris FROM Orderrader
 INNER JOIN Bestallningar ON Orderrader.OrderID = Bestallningar.OrderID
 INNER JOIN Kunder ON Bestallningar.KundID = Kunder.KundID
 INNER JOIN Bocker ON Orderrader.BokID = Bocker.BokID;
