@@ -50,7 +50,6 @@ INSERT INTO Kunder (Namn, Epost, Telefon, Adress) VALUES
 ('Bengt Bengtsson', 'bengt@mail.com', '070-2222222', 'Lilla vägen 2, 222 22 Göteborg'),
 ('Carl Carlsson', 'carl@mail.com', '070-3333333', 'Norra vägen 3, 333 33 Malmö'),
 ('Didrik Didriksson', 'didrik@mail.com', '070-4444444', 'Södra vägen 4, 444 44 Kalmar'),
-('Erik Eriksson', 'erik@mail.com', '070-5555555', 'Östra vägen 5, 555 55 Nybro');  --Testkund, som inte beställt något.
 
 -- Infogar testdata i tabellen Böcker
 INSERT INTO Bocker (Titel, ISBN, Forfattare, Pris, Lagerstatus) VALUES
