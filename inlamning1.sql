@@ -50,7 +50,7 @@ INSERT INTO Kunder (Namn, Epost, Telefon, Adress) VALUES
 ('Bengt Bengtsson', 'bengt@mail.com', '070-2222222', 'Lilla vägen 2, 222 22 Göteborg'),
 ('Carl Carlsson', 'carl@mail.com', '070-3333333', 'Norra vägen 3, 333 33 Malmö'),
 ('Didrik Didriksson', 'didrik@mail.com', '070-4444444', 'Södra vägen 4, 444 44 Kalmar'),
-('Erik Eriksson', 'erik@mail.com', '070-5555555', 'Östra vägen 5, 555 55 Nybro');
+('Erik Eriksson', 'erik@mail.com', '070-5555555', 'Östra vägen 5, 555 55 Nybro');  --Testkund, som inte beställt något.
 
 -- Infogar testdata i tabellen Böcker
 INSERT INTO Bocker (Titel, ISBN, Forfattare, Pris, Lagerstatus) VALUES
@@ -63,7 +63,7 @@ INSERT INTO Bocker (Titel, ISBN, Forfattare, Pris, Lagerstatus) VALUES
 -- Här kopplas Kunder till sin order.
 INSERT INTO Bestallningar (KundID, Datum, Totalbelopp) VALUES
 (1, '2024-03-01', 328.00),  -- Anna: Star Wars (129) + Hobbit (199)
-(1, '2024-03-15', 398.00),  -- Anna: 2 x Hobbit
+(1, '2024-03-15', 398.00),  -- Anna: 2 x Hobbit (199x2)
 (2, '2024-03-05', 159.00),  -- Bengt: The Game
 (3, '2024-03-10', 499.00),  -- Carl: Clean Code
 (1, '2024-03-20', 499.00),  -- Anna: Clean Code
@@ -80,10 +80,7 @@ INSERT INTO Orderrader (OrderID, BokID, Antal, Pris) VALUES
 (6, 4, 1, 199.00);  -- Order 6: 1 x Hobbit 
 
 
--- ========================== --
--- Testa så att allt fungerar --
--- ========================== --
-
+-- Testa så att allt fungerar
 
 -- Visar alla beställningar tillsammans med kundens namn
 SELECT Bestallningar.OrderID, Kunder.Namn, Bestallningar.Datum, Bestallningar.Totalbelopp FROM Bestallningar
