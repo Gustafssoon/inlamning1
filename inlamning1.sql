@@ -4,6 +4,7 @@
 -- Skapa databasen och använd den
 CREATE DATABASE Bokstugan;
 USE Bokstugan;
+DROP DATABASE Bokstugan; -- Droppar databasen
 
 -- Skapar tabell: Kunder
 CREATE TABLE Kunder (
@@ -49,14 +50,17 @@ INSERT INTO Kunder (Namn, Epost, Telefon, Adress) VALUES
 ('Anna Andersson', 'anna@mail.com', '070-1111111', 'Stora vägen 1, 111 11 Stockholm'),
 ('Bengt Bengtsson', 'bengt@mail.com', '070-2222222', 'Lilla vägen 2, 222 22 Göteborg'),
 ('Carl Carlsson', 'carl@mail.com', '070-3333333', 'Norra vägen 3, 333 33 Malmö'),
-('Didrik Didriksson', 'didrik@mail.com', '070-4444444', 'Södra vägen 4, 444 44 Kalmar'),
+('Didrik Didriksson', 'didrik@mail.com', '070-4444444', 'Södra vägen 4, 444 44 Kalmar');
 
 -- Infogar testdata i tabellen Böcker
 INSERT INTO Bocker (Titel, ISBN, Forfattare, Pris, Lagerstatus) VALUES
 ('Star Wars: Heir to the Empire', '9780553296129', 'Timothy Zahn', 129.00, 10),
 ('The Game', '9780470835847', 'Ken Dryden', 159.00, 5),
 ('Clean Code: A Handbook of Agile Software Craftsmanship', '9780132350884', 'Robert C. Martin', 499.00, 8),
-('The Hobbit', '9780261102217', 'J.R.R. Tolkien', 199.00, 25);
+('The Hobbit', '9780261102217', 'J.R.R. Tolkien', 199.00, 25),
+('Harry Potter and the Prisoner of Azkaban', '9780439136365', 'J.K. Rowling', 149.00, 18),
+('Band of Brothers', '9780743211383', 'Stephen E. Ambrose', 179.00, 10),
+('The Maze Runner', '9780385737944', 'James Dashner', 159.00, 16);
 
 -- Infogar testdata i tabellen Beställningar
 -- Här kopplas Kunder till sin order.
@@ -66,7 +70,8 @@ INSERT INTO Bestallningar (KundID, Datum, Totalbelopp) VALUES
 (2, '2024-03-05', 159.00),  -- Bengt: The Game
 (3, '2024-03-10', 499.00),  -- Carl: Clean Code
 (1, '2024-03-20', 499.00),  -- Anna: Clean Code
-(4, '2024-03-22', 199.00);  -- Didrik: Hobbit
+(4, '2024-03-22', 199.00),  -- Didrik: Hobbit
+(2, '2024-03-25', 129.00);  -- Bengt: Star Wars
 
 -- Infogar testdata i tabellen Orderrader
 INSERT INTO Orderrader (OrderID, BokID, Antal, Pris) VALUES
@@ -76,33 +81,27 @@ INSERT INTO Orderrader (OrderID, BokID, Antal, Pris) VALUES
 (3, 2, 1, 159.00),  -- Order 3: 1 x The Game
 (4, 3, 1, 499.00),  -- Order 4: 1 x Clean Code
 (5, 3, 1, 499.00),  -- Order 5: 1 x Clean Code
-(6, 4, 1, 199.00);  -- Order 6: 1 x Hobbit 
+(6, 4, 1, 199.00),  -- Order 6: 1 x Hobbit 
+(7, 1, 1, 129.00);  -- Order 7: 1 x Star Wars
 
 
--- Testa så att allt fungerar
+-- Visa allt i varje tabell
+SELECT * FROM Kunder;
+SELECT * FROM Bocker ORDER BY Pris DESC; -- Lista böcker dyrast till billigast
+SELECT * FROM Bestallningar;
+SELECT * FROM Orderrader;
 
--- Visar alla beställningar tillsammans med kundens namn
-SELECT Bestallningar.OrderID, Kunder.Namn, Bestallningar.Datum, Bestallningar.Totalbelopp FROM Bestallningar
+-- Visa beställningar med kundnamn, orderID, datum och totalbelopp
+SELECT Kunder.Namn, Bestallningar.OrderID, Bestallningar.Datum, Bestallningar.Totalbelopp FROM Bestallningar
 INNER JOIN Kunder ON Bestallningar.KundID = Kunder.KundID;
 
--- Visar alla orderrader med kundens namn och boktitel
-SELECT Orderrader.OrderID, Kunder.Namn, Bocker.Titel, Orderrader.Antal, Orderrader.Pris FROM Orderrader
-INNER JOIN Bestallningar ON Orderrader.OrderID = Bestallningar.OrderID
-INNER JOIN Kunder ON Bestallningar.KundID = Kunder.KundID
-INNER JOIN Bocker ON Orderrader.BokID = Bocker.BokID;
-
--- Visar även kunder utan beställningar (Erik Eriksson står som NULL)
-SELECT Kunder.Namn, Bestallningar.OrderID FROM Kunder
-LEFT JOIN Bestallningar
-ON Kunder.KundID = Bestallningar.KundID;
-
--- Räknar antal beställningar per kund
-SELECT Kunder.Namn, COUNT(Bestallningar.OrderID) AS AntalBeställningar FROM Bestallningar
-INNER JOIN Kunder ON Bestallningar.KundID = Kunder.KundID
+-- Visa antal beställningar per kund
+SELECT Kunder.Namn, COUNT(Bestallningar.OrderID) AS AntalBestallningar FROM Kunder
+INNER JOIN Bestallningar ON Kunder.KundID = Bestallningar.KundID 
 GROUP BY Kunder.Namn;
 
--- Visar kunder som gjort mer än 2 beställningar
-SELECT Kunder.Namn, COUNT(Bestallningar.OrderID) AS AntalBeställningar FROM Bestallningar
-INNER JOIN Kunder ON Bestallningar.KundID = Kunder.KundID
+-- Visa kunder som gjort fler än 1 beställning
+SELECT Kunder.Namn, COUNT(Bestallningar.OrderID) AS AntalBestallningar FROM Kunder
+INNER JOIN Bestallningar ON Kunder.KundID = Bestallningar.KundID
 GROUP BY Kunder.Namn
-HAVING COUNT(Bestallningar.OrderID) > 2;
+HAVING COUNT(Bestallningar.OrderID) > 1;
