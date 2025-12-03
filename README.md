@@ -50,7 +50,7 @@ Databasens struktur illustreras i följande ER-diagram:
 
 ## 🟪 Lärdomar
 En viktig lärdom i projektet var att välja rätt datatyp för ISBN.  
-Först testade jag att använda `INT`, men det fungerade inte eftersom ett ISBN-13 är för långt för att lagras i en vanlig integer. Därefter provade jag `VARCHAR`, som klarar längden men samtidigt tillåter bokstäver och andra tecken, vilket inte är önskvärt när man vill lagra ISBN i ett strikt numeriskt format. Om man vill använda bindestreck (`-`) för bättre läsbarhet fungerar `VARCHAR` bra, men i databasen behövs bara rena siffror.  
+Först testade jag att använda `INT`, men det fungerade inte eftersom ett ISBN-13 är för långt för att lagras i en vanlig `INT`. Därefter provade jag `VARCHAR`, som klarar längden men samtidigt tillåter bokstäver och andra tecken, vilket inte är önskvärt när man vill lagra ISBN i ett strikt numeriskt format. Om man vill använda bindestreck (`-`) för bättre läsbarhet fungerar `VARCHAR` bra, men i databasen behövs bara rena siffror.  
 Till slut valde jag `BIGINT`, som kan lagra 13-siffriga värden korrekt och endast accepterar numeriska data. Det blev den mest passande och korrekta lösningen för ISBN i databasen.
 
 En annan insikt jag fick under projektets gång handlade om hur relationerna mellan tabeller faktiskt fungerar i ett ER-diagram.  
@@ -61,5 +61,6 @@ Det gjorde mig också mer medveten om hur databasen tolkar relationen: i tabelle
 ---
 
 SQL-koden finns i [**inlamning1.sql**](inlamning1.sql).
+
 
 
