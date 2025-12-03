@@ -4,7 +4,7 @@
 -- Skapa databasen och använd den
 CREATE DATABASE Bokstugan;
 USE Bokstugan;
-DROP DATABASE Bokstugan; -- Droppar databasen
+-- DROP DATABASE Bokstugan; -- Droppar databasen
 
 -- Skapar tabell: Kunder
 CREATE TABLE Kunder (
