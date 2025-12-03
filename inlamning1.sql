@@ -7,7 +7,7 @@ USE Bokstugan;
 
 -- Skapar tabell: Kunder
 CREATE TABLE Kunder (
-    KundID INT AUTO_INCREMENT PRIMARY KEY, 							-- PK, ökar automatiskt
+    KundID INT AUTO_INCREMENT PRIMARY KEY, 							-- Ett unikt nummer för varje Kund
     Namn VARCHAR(100) NOT NULL,
     Epost VARCHAR(100) UNIQUE NOT NULL, 
     Telefon VARCHAR(50) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE Kunder (
 
 -- Skapar tabell: Böcker
 CREATE TABLE Bocker (
-	BokID INT AUTO_INCREMENT PRIMARY KEY, 							-- PK, ökar automatiskt
+	BokID INT AUTO_INCREMENT PRIMARY KEY, 							-- Ett unikt id för varje Bok
     ISBN VARCHAR(20) UNIQUE NOT NULL, 
     Titel VARCHAR(200) NOT NULL,
     Forfattare VARCHAR(100) NOT NULL,
@@ -26,22 +26,22 @@ CREATE TABLE Bocker (
 
 -- Skapar tabell: Beställningar
 CREATE TABLE Bestallningar (
-    OrderID INT AUTO_INCREMENT PRIMARY KEY,							-- PK, ökar automatiskt
+    OrderID INT AUTO_INCREMENT PRIMARY KEY,							-- Ett unikt id för varje order så att man vet vilken beställing det är.
     KundID INT NOT NULL,
     Datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 						-- Datum när beställningen skapas
 	Totalbelopp DECIMAL(10,2) NOT NULL CHECK (Totalbelopp >= 0), 	-- Summan av beställningen
-    FOREIGN KEY (KundID) REFERENCES Kunder(KundID) 					-- FK till kunder
+    FOREIGN KEY (KundID) REFERENCES Kunder(KundID) 					-- Hämtar primärnyckel från KundID i Kunder-tabellen.
 );
 
 -- Tabell: Orderrader
 CREATE TABLE Orderrader (
-    OrderradID INT AUTO_INCREMENT PRIMARY KEY,						-- PK, ökar automatiskt
+    OrderradID INT AUTO_INCREMENT PRIMARY KEY,						-- Ett unikt id för varje orderrad så att man vet vilken order det är.
     OrderID INT NOT NULL,
     BokID INT NOT NULL,
     Antal INT NOT NULL, 											-- Antal exemplar av boken
     Pris DECIMAL(10,2) NOT NULL,
-	FOREIGN KEY (OrderID) REFERENCES Bestallningar(OrderID), 		-- FK till beställningar
-	FOREIGN KEY (BokID) REFERENCES Bocker(BokID) 					-- FK till böcker
+	FOREIGN KEY (OrderID) REFERENCES Bestallningar(OrderID), 		-- Hämtar primärnyckel från OrderID i Beställningar-tabellen.
+	FOREIGN KEY (BokID) REFERENCES Bocker(BokID) 					-- Hämtar primärnyckel från ISBN i Böcker-tabellen.
 );
 
 -- Infogar testdata i tabellen Kunder
@@ -57,9 +57,9 @@ INSERT INTO Bocker (Titel, ISBN, Forfattare, Pris, Lagerstatus) VALUES
 ('The Game', '9780470835847', 'Ken Dryden', 159.00, 5),
 ('Clean Code: A Handbook of Agile Software Craftsmanship', '9780132350884', 'Robert C. Martin', 499.00, 8),
 ('The Hobbit', '9780261102217', 'J.R.R. Tolkien', 199.00, 25),
-('Harry Potter and the Prisoner of Azkaban', '9780439136365', 'J.K. Rowling', 149.00, 18),		-- Lägger till en bok som inte har en bestlänning för tillfället
-('Band of Brothers', '9780743211383', 'Stephen E. Ambrose', 179.00, 10),						-- Lägger till en bok som inte har en bestlänning för tillfället
-('The Maze Runner', '9780385737944', 'James Dashner', 159.00, 16);								-- Lägger till en bok som inte har en bestlänning för tillfället
+('Harry Potter and the Prisoner of Azkaban', '9780439136365', 'J.K. Rowling', 149.00, 18),		-- Lägger till en bok som inte har en beställning för tillfället
+('Band of Brothers', '9780743211383', 'Stephen E. Ambrose', 179.00, 10),						-- Lägger till en bok som inte har en beställning för tillfället
+('The Maze Runner', '9780385737944', 'James Dashner', 159.00, 16);								-- Lägger till en bok som inte har en beställning för tillfället
 
 -- Infogar testdata i tabellen Beställningar
 -- Här kopplas Kunder till sin order.
