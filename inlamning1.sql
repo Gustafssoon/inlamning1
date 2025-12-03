@@ -4,7 +4,6 @@
 -- Skapa databasen och använd den
 CREATE DATABASE Bokstugan;
 USE Bokstugan;
--- DROP DATABASE Bokstugan; -- Droppar databasen
 
 -- Skapar tabell: Kunder
 CREATE TABLE Kunder (
@@ -105,3 +104,5 @@ SELECT Kunder.Namn, COUNT(Bestallningar.OrderID) AS AntalBestallningar FROM Kund
 INNER JOIN Bestallningar ON Kunder.KundID = Bestallningar.KundID
 GROUP BY Kunder.Namn
 HAVING COUNT(Bestallningar.OrderID) > 1;
+
+-- DROP DATABASE Bokstugan; -- Droppar databasen
