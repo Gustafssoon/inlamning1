@@ -58,9 +58,9 @@ INSERT INTO Bocker (Titel, ISBN, Forfattare, Pris, Lagerstatus) VALUES
 ('The Game', '9780470835847', 'Ken Dryden', 159.00, 5),
 ('Clean Code: A Handbook of Agile Software Craftsmanship', '9780132350884', 'Robert C. Martin', 499.00, 8),
 ('The Hobbit', '9780261102217', 'J.R.R. Tolkien', 199.00, 25),
-('Harry Potter and the Prisoner of Azkaban', '9780439136365', 'J.K. Rowling', 149.00, 18),
-('Band of Brothers', '9780743211383', 'Stephen E. Ambrose', 179.00, 10),
-('The Maze Runner', '9780385737944', 'James Dashner', 159.00, 16);
+('Harry Potter and the Prisoner of Azkaban', '9780439136365', 'J.K. Rowling', 149.00, 18),		-- Lägger till en bok som inte har en bestlänning för tillfället
+('Band of Brothers', '9780743211383', 'Stephen E. Ambrose', 179.00, 10),						-- Lägger till en bok som inte har en bestlänning för tillfället
+('The Maze Runner', '9780385737944', 'James Dashner', 159.00, 16);								-- Lägger till en bok som inte har en bestlänning för tillfället
 
 -- Infogar testdata i tabellen Beställningar
 -- Här kopplas Kunder till sin order.
