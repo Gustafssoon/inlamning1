@@ -1,4 +1,4 @@
-# :books: Bokstugan – Databas för liten bokhandel  
+# :books: Bokstugan – Databas för en liten bokhandel  
 *Inlämning 1 – Databaser (YH25)*  
 Gabriel Gustafsson
 
@@ -61,4 +61,5 @@ Det gjorde mig också mer medveten om hur databasen tolkar relationen: i tabelle
 ---
 
 SQL-koden finns i [**inlamning1.sql**](inlamning1.sql).
+
 
