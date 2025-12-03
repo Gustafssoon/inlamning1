@@ -3,7 +3,7 @@
 Gabriel Gustafsson
 
 ## 🟥 Syfte
-Syftet med databasen är att skapa en liten bokhandel som ska kunna hantera sina kunder, böcker och beställningar på ett strukturerat och effektivt sätt.
+Syftet med databasen är att modellera en liten bokhandel som ska kunna hantera sina kunder, böcker och beställningar på ett strukturerat och effektivt sätt.
 
 Databasen gör det möjligt att:
 - registrera kunder och deras kontaktuppgifter  
@@ -37,8 +37,8 @@ Databasens struktur illustreras i följande ER-diagram:
 ## 🟦 Funktioner som används
 - **Primärnycklar (PK)** och `AUTO_INCREMENT`
 - **Främmande nycklar (FK)** – för att skapa relationer mellan tabeller
-- **UNIQUE** och `NOT NULL` – för att kräva unika och obligatoriska värden (t.ex. e-post, ISBN)
-- **CHECK** – regler på pris och lagerstatus
+- `UNIQUE` och `NOT NULL` – för att kräva unika och obligatoriska värden (t.ex. e-post, ISBN)
+- `CHECK` – regler på pris och lagerstatus
 - `DEFAULT CURRENT_TIMESTAMP` – för att automatiskt sätta datum
 - `INSERT` – för att lägga in testdata
 - `SELECT` – för att hämta data
@@ -48,14 +48,17 @@ Databasens struktur illustreras i följande ER-diagram:
 
 ---
 
-## 🟪 Lärdomar:
-En viktig lärdom i projektet var att välja rätt datatyp för ISBN. 
-Först testade jag att använda INT, men det fungerade inte eftersom ett ISBN-13 är för långt för att lagras i en vanlig integer. Därefter provade jag VARCHAR, som klarar längden men samtidigt tillåter bokstäver och andra tecken, vilket inte är önskvärt för att lagra ISBN. Om man vill använda - för bättre läsbarhet så funkar VARCHAR bra, men i databasen behövs bara rena siffror.
-Till slut valde jag BIGINT, som kan lagra 13-siffriga värden korrekt och bara accepterar numeriska data. Det blev den mest passande och korrekta lösningen för ISBN i databasen.
+## 🟪 Lärdomar
+En viktig lärdom i projektet var att välja rätt datatyp för ISBN.  
+Först testade jag att använda `INT`, men det fungerade inte eftersom ett ISBN-13 är för långt för att lagras i en vanlig integer. Därefter provade jag `VARCHAR`, som klarar längden men samtidigt tillåter bokstäver och andra tecken, vilket inte är önskvärt när man vill lagra ISBN i ett strikt numeriskt format. Om man vill använda bindestreck (`-`) för bättre läsbarhet fungerar `VARCHAR` bra, men i databasen behövs bara rena siffror.  
+Till slut valde jag `BIGINT`, som kan lagra 13-siffriga värden korrekt och endast accepterar numeriska data. Det blev den mest passande och korrekta lösningen för ISBN i databasen.
 
-En annan insikt jag fick under projektets gång handlade om hur relationerna mellan tabeller faktiskt fungerar i ett ER-diagram.
-Till en början tänkte jag att en kund borde ha minst en beställning, eftersom alla kunder i min testdata gjorde det. Men när jag började fundera mer insåg jag att modellen måste spegla verkligheten, inte bara de exempel jag råkade ha skapat. En kund kan ju mycket väl finnas i systemet innan den har gjort sin första beställning.
+En annan insikt jag fick under projektets gång handlade om hur relationerna mellan tabeller faktiskt fungerar i ett ER-diagram.  
+Till en början tänkte jag att en kund borde ha minst en beställning, eftersom alla kunder i min testdata gjorde det. Men när jag började fundera mer insåg jag att datamodellen måste spegla verkligheten, inte bara den testdata jag råkade skapa. En kund kan ju mycket väl finnas i systemet innan den har gjort sin första beställning.
+
+Det gjorde mig också mer medveten om hur databasen tolkar relationen: i tabellen *Beställningar* finns en FOREIGN KEY som kräver att varje beställning måste kopplas till en kund, men i tabellen *Kunder* finns inget som kräver att kunden måste ha en beställning. Därför är det helt rimligt att en kund kan ha noll eller flera beställningar, även om det inte syntes direkt i min testdata.
 
 ---
 
 SQL-koden finns i [**inlamning1.sql**](inlamning1.sql).
+
