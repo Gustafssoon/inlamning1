@@ -44,7 +44,6 @@ Databasens struktur illustreras i följande ER-diagram:
 - `SELECT` – för att hämta data
 - `INNER JOIN` – för att kombinera data från flera tabeller
 - `GROUP BY` och `HAVING` – för att sammanställa och filtrera aggregerad data
-- `SHOW TABLES` och `DESCRIBE` – för att visa tabellstrukturer
 
 ---
 
@@ -61,6 +60,7 @@ Det gjorde mig också mer medveten om hur databasen tolkar relationen: i tabelle
 ---
 
 SQL-koden finns i [**inlamning1.sql**](inlamning1.sql).
+
 
 
 
