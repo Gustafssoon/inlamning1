@@ -38,7 +38,7 @@ CREATE TABLE Orderrader (
     OrderradID INT AUTO_INCREMENT PRIMARY KEY,						-- Ett unikt id för varje orderrad så att man vet vilken order det är.
     OrderID INT NOT NULL,
     BokID INT NOT NULL,
-    Antal INT NOT NULL, 											-- Antal exemplar av boken
+    Antal INT NOT NULL CHECK (Antal > 0), 							-- Antal exemplar av boken. Får inte vara negativt antal.
     Pris DECIMAL(10,2) NOT NULL CHECK (Pris > 0),
 	FOREIGN KEY (OrderID) REFERENCES Bestallningar(OrderID), 		-- Hämtar primärnyckel från OrderID i Beställningar-tabellen.
 	FOREIGN KEY (BokID) REFERENCES Bocker(BokID) 					-- Hämtar primärnyckel från BokID i Böcker-tabellen.
