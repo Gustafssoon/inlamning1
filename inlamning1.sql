@@ -17,7 +17,7 @@ CREATE TABLE Kunder (
 -- Skapar tabell: Böcker
 CREATE TABLE Bocker (
 	BokID INT AUTO_INCREMENT PRIMARY KEY, 							-- Ett unikt id för varje Bok
-    ISBN VARCHAR(20) UNIQUE NOT NULL, 
+    ISBN BIGINT UNIQUE NOT NULL,
     Titel VARCHAR(200) NOT NULL,
     Forfattare VARCHAR(100) NOT NULL,
     Pris DECIMAL(10,2) NOT NULL CHECK (Pris > 0), 					-- Pris måste vara större än 0
@@ -39,9 +39,9 @@ CREATE TABLE Orderrader (
     OrderID INT NOT NULL,
     BokID INT NOT NULL,
     Antal INT NOT NULL, 											-- Antal exemplar av boken
-    Pris DECIMAL(10,2) NOT NULL,
+    Pris DECIMAL(10,2) NOT NULL CHECK (Pris > 0),
 	FOREIGN KEY (OrderID) REFERENCES Bestallningar(OrderID), 		-- Hämtar primärnyckel från OrderID i Beställningar-tabellen.
-	FOREIGN KEY (BokID) REFERENCES Bocker(BokID) 					-- Hämtar primärnyckel från ISBN i Böcker-tabellen.
+	FOREIGN KEY (BokID) REFERENCES Bocker(BokID) 					-- Hämtar primärnyckel från BokID i Böcker-tabellen.
 );
 
 -- Infogar testdata i tabellen Kunder
@@ -49,7 +49,8 @@ INSERT INTO Kunder (Namn, Epost, Telefon, Adress) VALUES
 ('Anna Andersson', 'anna@mail.com', '070-1111111', 'Stora vägen 1, 111 11 Stockholm'),
 ('Bengt Bengtsson', 'bengt@mail.com', '070-2222222', 'Lilla vägen 2, 222 22 Göteborg'),
 ('Carl Carlsson', 'carl@mail.com', '070-3333333', 'Norra vägen 3, 333 33 Malmö'),
-('Didrik Didriksson', 'didrik@mail.com', '070-4444444', 'Södra vägen 4, 444 44 Kalmar');
+('Didrik Didriksson', 'didrik@mail.com', '070-4444444', 'Södra vägen 4, 444 44 Kalmar'),
+('Erik Eriksson', 'erik@mail.com', '070-5555555', 'Östra vägen 5, 555 55 Nybro');			-- Lägger till kund som har registrerat sig men inte gjort en beställning ännu.
 
 -- Infogar testdata i tabellen Böcker
 INSERT INTO Bocker (Titel, ISBN, Forfattare, Pris, Lagerstatus) VALUES
